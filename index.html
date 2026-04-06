@@ -19,17 +19,43 @@
 
     <script>
         let currentPage = 0;
-        const totalPages = 10; // AJUSTE AQUI o total de páginas (contando com a capa)
+        const totalPages = 8; // De 0 a 7, temos 8 imagens no total
 
         function changePage(step) {
-            currentPage += step;
-            if (currentPage < 0) currentPage = 0;
-            if (currentPage >= totalPages) currentPage = totalPages - 1;
+            let nextStep = currentPage + step;
 
-            document.getElementById('hq-page').src = `assets/${currentPage}.png`;
-            document.getElementById('page-number').innerText = `Página ${currentPage}`;
-            window.scrollTo(0, 0); // Volta para o topo ao trocar de página
+            // Bloqueia se tentar ir abaixo de 0 ou acima de 7
+            if (nextStep >= 0 && nextStep < totalPages) {
+                currentPage = nextStep;
+                
+                // Atualiza a imagem (garanta que o arquivo na pasta é .png)
+                document.getElementById('hq-page').src = `assets/${currentPage}.png`;
+                
+                // Atualiza o texto do número da página
+                document.getElementById('page-number').innerText = `Página ${currentPage}`;
+                
+                // Volta o scroll para o topo para facilitar a leitura da nova página
+                window.scrollTo(0, 0);
+            }
+            
+            // Opcional: Desativar visualmente os botões nos limites
+            updateButtons();
         }
+
+        function updateButtons() {
+            // Se quiser que o botão mude de cor ou suma quando chegar no limite
+            const prevBtn = document.querySelectorAll('button')[0];
+            const nextBtn = document.querySelectorAll('button')[1];
+
+            prevBtn.style.opacity = (currentPage === 0) ? "0.5" : "1";
+            nextBtn.style.opacity = (currentPage === totalPages - 1) ? "0.5" : "1";
+            
+            prevBtn.style.cursor = (currentPage === 0) ? "not-allowed" : "pointer";
+            nextBtn.style.cursor = (currentPage === totalPages - 1) ? "not-allowed" : "pointer";
+        }
+
+        // Inicia os botões na carga da página
+        updateButtons();
     </script>
 </body>
 </html>
