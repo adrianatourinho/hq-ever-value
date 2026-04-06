@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HQ - Ever Value Hackathon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="reader-container">
+        <img id="hq-page" src="assets/0.jpg" alt="Capa da HQ">
+        
+        <div class="navigation">
+            <button onclick="changePage(-1)">← Anterior</button>
+            <span id="page-number">Página 0</span>
+            <button onclick="changePage(1)">Próxima →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 0;
+        const totalPages = 10; // AJUSTE AQUI o total de páginas (contando com a capa)
+
+        function changePage(step) {
+            currentPage += step;
+            if (currentPage < 0) currentPage = 0;
+            if (currentPage >= totalPages) currentPage = totalPages - 1;
+
+            document.getElementById('hq-page').src = `assets/${currentPage}.jpg`;
+            document.getElementById('page-number').innerText = `Página ${currentPage}`;
+            window.scrollTo(0, 0); // Volta para o topo ao trocar de página
+        }
+    </script>
+</body>
+</html>
